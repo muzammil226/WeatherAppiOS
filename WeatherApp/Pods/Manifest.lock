@@ -1,0 +1,28 @@
+PODS:
+  - DZNEmptyDataSet (1.8.1)
+  - LGSideMenuController (2.1.1)
+  - ReachabilitySwift (4.1.0)
+  - Shimmer (1.0.2)
+
+DEPENDENCIES:
+  - DZNEmptyDataSet
+  - LGSideMenuController
+  - ReachabilitySwift
+  - Shimmer
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - DZNEmptyDataSet
+    - LGSideMenuController
+    - ReachabilitySwift
+    - Shimmer
+
+SPEC CHECKSUMS:
+  DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
+  LGSideMenuController: ae40c80983ab8b8801c7cef0a6804d43aaa72d45
+  ReachabilitySwift: 6849231cd4e06559f3b9ef4a97a0a0f96d41e09f
+  Shimmer: c5374be1c2b0c9e292fb05b339a513cf291cac86
+
+PODFILE CHECKSUM: 9be25d53dfee3a7a3d65c50a4c4d008ad0466487
+
+COCOAPODS: 1.5.3
