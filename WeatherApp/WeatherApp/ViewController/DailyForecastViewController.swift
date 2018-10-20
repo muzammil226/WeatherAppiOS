@@ -50,35 +50,7 @@ class DailyForecastViewController: UIViewController, CLLocationManagerDelegate, 
     }
 
     // MARK: - 🚧 Local Class Methods
-    
-    func setupNetworking() {
-        
-        self.locationManager.requestAlwaysAuthorization()
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager.delegate = self
-            locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers
-        }
-        
-        NetworkManager.isReachable { _ in
-            
-            self.locationManager.requestLocation()
-            
-        }
-        NetworkManager.sharedInstance.reachability.whenUnreachable = { reachability in
-            self.locationManager.requestLocation()
-            BPStatusBarAlert().bgColor(color: .orange).message(message: "Network not reachable").show()
-            
-        }
-        NetworkManager.isUnreachable { _ in
-        BPStatusBarAlert().bgColor(color: .orange).message(message: "Network not reachable").show()
-        }
-        
-        NetworkManager.sharedInstance.reachability.whenReachable = { reachability in
-            self.locationManager.requestLocation()
-            BPStatusBarAlert().bgColor(color: .green).message(message: "Network is reachable").show()
-            
-        }
-    }
+
     func loadDailyForcast() {
 
         WeatherClinet.shared.fetchDailyForcastWeather(latValue:latitude ?? 25.2048, logValue:longitude ?? 55.2708) { (dailyForcastResult, error) in
@@ -115,8 +87,6 @@ class DailyForecastViewController: UIViewController, CLLocationManagerDelegate, 
         if let lat = locations.last?.coordinate.latitude, let long = locations.last?.coordinate.longitude {
             latitude = Double(lat)
             longitude = Double(long)
-            print("Last locations = \(lat) \(long)")
-            print("Last to Double locations = \(latitude ?? 0) \(longitude ?? 0)")
             loadDailyForcast()
             
         }

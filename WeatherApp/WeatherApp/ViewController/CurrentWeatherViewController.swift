@@ -165,10 +165,8 @@ extension CurrentWeatherViewController:CLLocationManagerDelegate{
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
                 if let lat = locations.last?.coordinate.latitude, let long = locations.last?.coordinate.longitude {
-                    print("Last locations = \(lat) \(long)")
                     latitude = Double(lat)
                     longitude = Double(long)
-                    print("Last to Double locations = \(latitude ?? 0) \(longitude ?? 0)")
                     loadCurrentForcast()
                     
                 }
