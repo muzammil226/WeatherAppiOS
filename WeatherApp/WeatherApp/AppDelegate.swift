@@ -19,7 +19,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var latitude: Double?
     var longitude: Double?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
 
@@ -42,11 +41,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        self.locationManager.requestAlwaysAuthorization()
 //        if CLLocationManager.locationServicesEnabled() {
 //            locationManager.delegate = self
-//            locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers
+//            locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
 //            locationManager.requestLocation()
 //        }
-        
-        //UIApplication.shared.setMinimumBackgroundFetchInterval(10)
+//        
+//        UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplication.backgroundFetchIntervalMinimum)
         return true
     }
 
@@ -74,7 +73,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
 //    func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
 //
-//        locationManager.requestLocation()
+//        print("Background fetch is called in the appdelegate function...")
+//
+//        if let vc = self.window?.rootViewController as? CurrentWeatherViewController{
+//            vc.locationManager.requestLocation()
+//            print("Background fetch is called in the appdelegate function...")
+//            completionHandler(.newData)
+//        }
 //    }
     
 
@@ -85,11 +90,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
 //
 //        if let lat = locations.last?.coordinate.latitude, let long = locations.last?.coordinate.longitude {
-//            print("Last locations = \(lat) \(long)")
+//            //print("Last locations = \(lat) \(long)")
 //            latitude = Double(lat)
 //            longitude = Double(long)
-//            print("Last to Double locations = \(latitude ?? 0) \(longitude ?? 0)")
 //
+//            print("Location update in background..")
 //
 //        }
 //        else {
@@ -103,3 +108,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //
 //    }
 //}
+
+//func fetchBackgroundForcast(latValue: Double, logValue: Double) -> Void {
+//
+//     let apiKey = "615097af9c70b0246cbd3680be44ecaa"
+//    let urlString = "https://api.openweathermap.org/data/2.5/forecast/daily?lat=\(latValue)&lon=\(logValue)&cnt=7&appid=\(apiKey)"
+//
+//    guard let url = URL(string: urlString) else {
+//        _ =  NSError(domain: "URL is wrong", code: 1, userInfo: nil)
+//        return
+//    }
+//    let session = URLSession.shared
+//    let request = URLRequest(url: url)
+//    let task = session.dataTask(with: request) { (data, _, error) in
+//
+//        guard error ==  nil else {
+//            return
+//
+//        }
+//        guard let data = data else { return}
+//        do {
+//            Utility().saveDailyForcast(data: data)
+//        } catch let error {
+//            print("Error is \(error.localizedDescription)")
+//        }
+//    }
+//    task.resume()
+//}
+

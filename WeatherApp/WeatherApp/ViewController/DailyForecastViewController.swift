@@ -23,6 +23,8 @@ class DailyForecastViewController: UIViewController, CLLocationManagerDelegate, 
 
     var isDataLoading: Bool = true
     let locationManager = CLLocationManager()
+    var isLocationFetched:Bool = false
+
 
     // MARK: - 🌻 Life Cycle
 
@@ -40,6 +42,7 @@ class DailyForecastViewController: UIViewController, CLLocationManagerDelegate, 
         if CLLocationManager.locationServicesEnabled() {
             locationManager.delegate = self
             locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers
+            self.isLocationFetched = false
             self.locationManager.requestLocation()
         }
         self.title = "Daily Forcast"
@@ -84,15 +87,19 @@ class DailyForecastViewController: UIViewController, CLLocationManagerDelegate, 
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
+        if isLocationFetched == false {
         if let lat = locations.last?.coordinate.latitude, let long = locations.last?.coordinate.longitude {
+            isLocationFetched = true
             latitude = Double(lat)
             longitude = Double(long)
             loadDailyForcast()
+
             
         }
         else {
             print("ErroUser r location cannot de detected")
         }
+    }
     }
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         
@@ -132,9 +139,12 @@ class DailyForecastViewController: UIViewController, CLLocationManagerDelegate, 
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
+        if !isDataLoading {
         let detailView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController
         detailView.dailyForcast = dailyForcast?.list[indexPath.row]
             self.navigationController?.pushViewController(detailView, animated: true)
+            
+        }
     }
 }
 

@@ -23,6 +23,7 @@ class CurrentWeatherViewController: UIViewController, UITableViewDelegate, UITab
     var latitude: Double?
     var longitude: Double?
     var isDataLoading: Bool = true
+    var isLocationFetched:Bool = false
 
     let locationManager = CLLocationManager()
     
@@ -47,8 +48,6 @@ class CurrentWeatherViewController: UIViewController, UITableViewDelegate, UITab
 
     override func viewWillAppear(_ animated: Bool) {
 
-        let unitChanged = UserDefaults.standard.bool(forKey: "TempUnit")
-        print("unitChange \(unitChanged)")
         self.tableView.reloadData()
         self.title = "Current Forcast"
     }
@@ -151,6 +150,7 @@ class CurrentWeatherViewController: UIViewController, UITableViewDelegate, UITab
 
     @IBAction func refreshData(_ sender: Any) {
         self.isDataLoading = true
+        isLocationFetched = false 
         self.tableView.reloadData()
         locationManager.requestLocation()
         }
@@ -164,15 +164,19 @@ extension CurrentWeatherViewController:CLLocationManagerDelegate{
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
+        if isLocationFetched == false {
                 if let lat = locations.last?.coordinate.latitude, let long = locations.last?.coordinate.longitude {
                     latitude = Double(lat)
                     longitude = Double(long)
                     loadCurrentForcast()
+                    isLocationFetched = true
                     
                 }
                 else {
                     print("ErroUser r location cannot de detected")
-                }
+            }
+            
+        }
         }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
